@@ -20,7 +20,7 @@ class AuthorController extends AbstractController
         $authors = array(
             array('id' => 1, 'picture' => '/img/téléchargement.jfif','username' => 'Victor Hugo', 'email' => 'victor.hugo@gmail.com ', 'nb_books' => 100),
             array('id' => 2, 'picture' => '/img/william-shakespeare.jpg','username' => ' William Shakespeare', 'email' =>  ' william.shakespeare@gmail.com', 'nb_books' => 200 ),
-            array('id' => 3, 'picture' => '/img /Taha_Hussein.jpg','username' => 'Taha Hussein', 'email' => 'taha.hussein@gmail.com', 'nb_books' => 300),
+            array('id' => 3, 'picture' => '/img/Taha_Hussein.jpg','username' => 'Taha Hussein', 'email' => 'taha.hussein@gmail.com', 'nb_books' => 300),
             );
         return $this->render('author/list.html.twig',[
             "auth"=>$authors
