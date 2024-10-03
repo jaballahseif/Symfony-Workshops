@@ -2,9 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Author;
+use App\Form\AuthorType;
 use App\Repository\AuthorRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+
 use Symfony\Component\Routing\Attribute\Route;
 
 class AuthorController extends AbstractController
@@ -37,13 +43,30 @@ class AuthorController extends AbstractController
             ['ii'=>$i]
         );
     }
-    #[Route ('/Affiche')]
+    #[Route ('/Affiche',name:'aff')]
     function Affiche(AuthorRepository $repo){
         $authors=$repo->findAll();
 
         return $this->render(
             'author/affiche.html.twig',
             ['auth'=>$authors]
+        );
+
+    }
+    #[Route ('Ajout/')]
+    function Ajout(Request $request,ManagerRegistry $manager){
+        $author = new Author;
+        $form=$this->createForm(AuthorType::class,$author)->add('Ajout',SubmitType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em=$manager->getManager();
+            $em->persist($author);
+            $em->flush();
+            return $this->redirectToRoute('aff');
+        }
+
+        return $this->render(
+            'author/ajout.html.twig',['form'=>$form->createView()]
         );
 
     }
