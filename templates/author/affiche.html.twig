@@ -1,1 +1,17 @@
-test
+La liste des authors
+<table border="1">
+    <tr>
+        <th>Id</th>
+        <th>Username</th>
+        <th>Email</th>
+    </tr>
+    
+{%for a in auth%}
+<tr>
+  <td>{{a.id}}</td>
+  <td>{{a.username}}</td>
+  <td>{{a.email}}</td>
+</tr>
+{%else%} <br> Tableau NotFound
+{%endfor%}
+</table>

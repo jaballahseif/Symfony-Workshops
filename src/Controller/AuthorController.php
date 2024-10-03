@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\AuthorRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -35,6 +36,16 @@ class AuthorController extends AbstractController
             'author/detail.html.twig',
             ['ii'=>$i]
         );
+    }
+    #[Route ('/Affiche')]
+    function Affiche(AuthorRepository $repo){
+        $authors=$repo->findAll();
+
+        return $this->render(
+            'author/affiche.html.twig',
+            ['auth'=>$authors]
+        );
 
     }
+    
 }
