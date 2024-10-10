@@ -4,13 +4,16 @@ La liste des authors
         <th>Id</th>
         <th>Username</th>
         <th>Email</th>
+        <th>Detail</th>
     </tr>
     
 {%for a in auth%}
 <tr>
   <td>{{a.id}}</td>
   <td>{{a.username}}</td>
-  <td>{{a.email}}</td>
+  <td>{{a.email}}</td>  
+  <td><a href="{{path('DD2',{'i2':a.id})}}">Detail</a></td>
+
 </tr>
 {%else%} <br> Tableau NotFound
 {%endfor%}

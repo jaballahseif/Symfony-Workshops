@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Author;
 use App\Form\AuthorType;
 use App\Repository\AuthorRepository;
+use Doctrine\ORM\Mapping\Id;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -70,5 +71,13 @@ class AuthorController extends AbstractController
         );
 
     }
-    
+    #[Route('/Detail2/{i2}', name: 'DD2')]
+    public function detail2($i2, AuthorRepository $repo): Response
+    {
+        $author = $repo->find($i2);
+        return $this->render('author/detail2.html.twig', [
+            'ii2' => $author,
+        ]);
+    }
 }
+    
