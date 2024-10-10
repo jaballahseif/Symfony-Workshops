@@ -54,7 +54,7 @@ class AuthorController extends AbstractController
         );
 
     }
-    #[Route ('Ajout/')]
+    #[Route ('Ajout/',name:'ajout')]
     function Ajout(Request $request,ManagerRegistry $manager){
         $author = new Author;
         $form=$this->createForm(AuthorType::class,$author)->add('Ajout',SubmitType::class);
@@ -72,12 +72,27 @@ class AuthorController extends AbstractController
 
     }
     #[Route('/Detail2/{i2}', name: 'DD2')]
-    public function detail2($i2, AuthorRepository $repo): Response
+    public function Detail2($i2, AuthorRepository $repo): Response
     {
         $author = $repo->find($i2);
+
         return $this->render('author/detail2.html.twig', [
             'ii2' => $author,
         ]);
+    }
+
+    #[Route('/remove/{i3}', name: 'DD3')]
+    public function Remove($i3,ManagerRegistry $manager,AuthorRepository $repo): Response
+    {
+        $em=$manager->getManager();
+
+        $author = $repo->find($i3);
+        if (!empty($author) ) {
+            $em->Remove($author);
+            $em->flush();
+            return $this->redirectToRoute('aff');
+
+        }
     }
 }
     
