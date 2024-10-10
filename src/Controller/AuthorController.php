@@ -94,5 +94,26 @@ class AuthorController extends AbstractController
 
         }
     }
+
+
+    
+    #[Route ('Uodate/{j}',name:'DD4')]
+    function Update($j,Request $request,ManagerRegistry $manager,AuthorRepository $repo){
+        $author = $repo->find($j);
+
+        $form=$this->createForm(AuthorType::class,$author)->add('update',SubmitType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em=$manager->getManager();
+        
+            $em->flush();
+            return $this->redirectToRoute('aff');
+        }
+
+        return $this->render(
+            'author/ajout.html.twig',['form'=>$form->createView()]
+        );
+
+    }
 }
     

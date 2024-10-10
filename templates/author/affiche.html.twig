@@ -5,7 +5,10 @@ La liste des authors
         <th>Username</th>
         <th>Email</th>
         <th>Detail</th>
+        <th>update</th>
+
         <th>delete</th>
+
          <th>Ajout</th>
     </tr>
     
@@ -17,6 +20,7 @@ La liste des authors
   <td><a href="{{path('ajout')}}">Ajout</a></td>
 
   <td><a href="{{path('DD2',{'i2':a.id})}}">Detail</a></td>
+  <td><a href="{{path('DD4',{'j':a.id})}}">Update</a></td>
   <td><a href="{{path('DD3',{'i3':a.id})}}">Delete</a></td>
 
 
