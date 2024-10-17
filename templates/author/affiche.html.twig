@@ -4,6 +4,7 @@ La liste des authors
         <th>Id</th>
         <th>Username</th>
         <th>Email</th>
+        <th>nbbook</th>
         <th>Detail</th>
         <th>update</th>
 
@@ -17,6 +18,8 @@ La liste des authors
   <td>{{a.id}}</td>
   <td>{{a.username}}</td>
   <td>{{a.email}}</td>  
+  <td>{{a.nbbooks}}</td>
+
   <td><a href="{{path('ajout')}}">Ajout</a></td>
 
   <td><a href="{{path('DD2',{'i2':a.id})}}">Detail</a></td>

@@ -3,8 +3,8 @@
 namespace App\Controller;
 use App\Entity\Book;
 use App\Form\BookType;
+use App\Repository\AuthorRepository;
 use App\Repository\BookRepository;
-use Doctrine\ORM\Mapping\Entity;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,30 +22,67 @@ class BookController extends AbstractController
         ]);
     }
     #[Route('ajout', name: 'ajout_book')]
-    public function AjoutBook(Request $request,ManagerRegistry $manager){
+    public function AjoutBook(Request $request,ManagerRegistry $manager,AuthorRepository $auth){
+    
        $book = new Book;
        $form=$this->createForm(BookType::class,$book)->add('Ajout',SubmitType::class);
        $form->handleRequest($request);
        if ($form->isSubmitted() && $form->isValid()) {
+
         $em=$manager->getManager();
+        $nb = $book->getIdAuthor()->getNbbooks()+1;
+        $book->getIdAuthor()->setNbbooks($nb);
         $em->persist($book);
         $em->flush();
-        return new Response('Ajout sucess');
+
+        
+
+
+
         return $this->redirectToRoute('affbook');
+
     }
     return $this->render(
-        'book/ajout.html.twig',['form'=>$form->createView()]
+        'book/ajout.html.twig',[
+            'form'=>$form->createView()]
     );
     }
 
     #[Route('affiche',name:'affbook')]
-    function Affiche(BookRepository $book){
-        $books=$book->findAll();
+    function Affiche(BookRepository $repo){
+        $books=$repo->findAll();
 
         return $this->render(
             'book/affiche.html.twig',
             ['book'=>$books]
         );
 
+    }
+    #[Route('update/{b}', name: 'update')]
+    public function UpdateBook(Request $request,ManagerRegistry $manager,BookRepository $repo,$b){
+        $book = $repo->find($b);
+       $form=$this->createForm(BookType::class,$book)->add('update',SubmitType::class);
+       $form->handleRequest($request);
+       if ($form->isSubmitted() && $form->isValid()) {
+        $em=$manager->getManager();
+        $em->flush();
+        return $this->redirectToRoute('affbook');
+    }
+    return $this->render(
+        'book/ajout.html.twig',['form'=>$form->createView()]
+    );
+    }
+    #[Route('delete/{b}', name: 'delete')]
+    public function Removebook($b,ManagerRegistry $manager,BookRepository $repo): Response
+    {
+        $em=$manager->getManager();
+
+        $book = $repo->find($b);
+        if (!empty($book) ) {
+            $em->Remove($book);
+            $em->flush();
+            return $this->redirectToRoute('affbook');
+
+        }
     }
 }

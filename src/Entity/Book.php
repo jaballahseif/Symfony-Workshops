@@ -20,7 +20,7 @@ class Book
     private ?\DateTimeInterface $publicationDate = null;
 
     #[ORM\Column]
-    private ?bool $enabled = null;
+    private ?bool $enabled = true;
 
     #[ORM\ManyToOne(inversedBy: 'books')]
     private ?Author $id_Author = null;

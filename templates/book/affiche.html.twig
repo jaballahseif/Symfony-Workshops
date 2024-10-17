@@ -8,18 +8,41 @@ La liste des authors
         <th>Category</th>
 
         <th>Authored By</th>
+        <th>update</th>
+        <th>delete</th>
+
+
 
     </tr>
-{%for b in book%}
+    {%set p =0%}
+    {%set up =0%}
+
+{%for b in book%}        
+
+
 <tr>
   <td>{{b.ref}}</td>
   <td>{{b.title}}</td>
   <td>{{b.publicationDate|date("m/d/Y")}}</td>  
-  <td>{{b.enabled}}</td>  
+  <td>{{b.enabled}}</td> 
+  {% if b.enabled==true %}
+  {%set p =p+1%}
+  {% endif %} 
+  {% if b.enabled==false %}
+  {%set up =up+1%}
+  {% endif %} 
   <td>{{b.category}}</td>  
   <td>{{b.idAuthor.username}}</td>  
+  <td><a href="{{path('update',{'b':b.ref})}}">Update</a></td>
+  <td><a href="{{path('delete',{'b':b.ref})}}">delete</a></td>
+
   
 </tr>
+
+
 {%else%} <br> Tableau NotFound
 {%endfor%}
+
 </table>
+<h1>published = {{p}}</h1>
+<h1>unpublished = {{up}}</h1>
