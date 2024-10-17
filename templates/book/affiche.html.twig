@@ -1,0 +1,25 @@
+La liste des authors
+<table border="1">
+    <tr>
+        <th>Ref</th>
+        <th>Title</th>
+        <th>Date publiction</th>
+        <th>Enabled</th>
+        <th>Category</th>
+
+        <th>Authored By</th>
+
+    </tr>
+{%for b in book%}
+<tr>
+  <td>{{b.ref}}</td>
+  <td>{{b.title}}</td>
+  <td>{{b.publicationDate|date("m/d/Y")}}</td>  
+  <td>{{b.enabled}}</td>  
+  <td>{{b.category}}</td>  
+  <td>{{b.idAuthor.username}}</td>  
+  
+</tr>
+{%else%} <br> Tableau NotFound
+{%endfor%}
+</table>

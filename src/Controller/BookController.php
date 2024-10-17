@@ -3,6 +3,7 @@
 namespace App\Controller;
 use App\Entity\Book;
 use App\Form\BookType;
+use App\Repository\BookRepository;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,7 +22,6 @@ class BookController extends AbstractController
         ]);
     }
     #[Route('ajout', name: 'ajout_book')]
-
     public function AjoutBook(Request $request,ManagerRegistry $manager){
        $book = new Book;
        $form=$this->createForm(BookType::class,$book)->add('Ajout',SubmitType::class);
@@ -30,13 +30,22 @@ class BookController extends AbstractController
         $em=$manager->getManager();
         $em->persist($book);
         $em->flush();
-        //return $this->redirectToRoute('aff');
+        return new Response('Ajout sucess');
+        return $this->redirectToRoute('affbook');
     }
     return $this->render(
         'book/ajout.html.twig',['form'=>$form->createView()]
     );
+    }
 
-        
+    #[Route('affiche',name:'affbook')]
+    function Affiche(BookRepository $book){
+        $books=$book->findAll();
+
+        return $this->render(
+            'book/affiche.html.twig',
+            ['book'=>$books]
+        );
 
     }
 }
