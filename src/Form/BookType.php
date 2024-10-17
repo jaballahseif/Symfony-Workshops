@@ -9,7 +9,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Choice;
 
 class BookType extends AbstractType
 {
@@ -23,7 +22,7 @@ class BookType extends AbstractType
             ])
             ->add('enabled')
             ->add('Category',ChoiceType::class,[
-                'Choices'=>[
+                'choices'=>[
                     'SF'=>'Science Fiction',
                     'M'=>'Mystery',
                     'R'=>'Romance'
