@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Controller;
+
+use App\Entity\Author;
 use App\Entity\Book;
 use App\Form\BookType;
 use App\Repository\AuthorRepository;
@@ -11,6 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Validator\Constraints\Length;
+
 #[Route('book/')]
 class BookController extends AbstractController
 {
@@ -22,7 +26,7 @@ class BookController extends AbstractController
         ]);
     }
     #[Route('ajout', name: 'ajout_book')]
-    public function AjoutBook(Request $request,ManagerRegistry $manager,AuthorRepository $auth){
+    public function AjoutBook(Request $request,ManagerRegistry $manager){
     
        $book = new Book;
        $form=$this->createForm(BookType::class,$book)->add('Ajout',SubmitType::class);
@@ -34,11 +38,6 @@ class BookController extends AbstractController
         $book->getIdAuthor()->setNbbooks($nb);
         $em->persist($book);
         $em->flush();
-
-        
-
-
-
         return $this->redirectToRoute('affbook');
 
     }
@@ -85,4 +84,30 @@ class BookController extends AbstractController
 
         }
     }
+    #[Route('deleteauth', name: 'delete0')]
+    public function Removebook0(ManagerRegistry $manager,AuthorRepository $repo): Response
+    {
+        $em=$manager->getManager();
+
+        $auths = $repo->findAll();
+        foreach ($auths as $auth){
+            if ($auth->getNbbooks()==0) {
+                $em->remove($auth); 
+
+            }
+        }
+        $em->flush();
+    return $this->redirectToRoute('aff');
+    }
+    #[Route('details/{b}', name: 'details')]
+    public function Detail($b,BookRepository $repo): Response
+    {
+
+        $book = $repo->find($b);
+
+    return $this->render('book/detail.html.twig', [
+        'bb' => $book,
+    ]);
+    }
+
 }

@@ -10,6 +10,7 @@ La liste des authors
         <th>Authored By</th>
         <th>update</th>
         <th>delete</th>
+        <th>show</th>
 
 
 
@@ -35,6 +36,8 @@ La liste des authors
   <td>{{b.idAuthor.username}}</td>  
   <td><a href="{{path('update',{'b':b.ref})}}">Update</a></td>
   <td><a href="{{path('delete',{'b':b.ref})}}">delete</a></td>
+  <td><a href="{{path('details',{'b':b.ref})}}">detail</a></td>
+
 
   
 </tr>
