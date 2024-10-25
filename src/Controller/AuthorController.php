@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Author;
 use App\Form\AuthorType;
 use App\Repository\AuthorRepository;
+use App\Repository\BookRepository;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -115,5 +116,18 @@ class AuthorController extends AbstractController
         );
 
     }
+
+    #[Route ('/Mail',name:'mail')]
+    function Mail(AuthorRepository $repo){
+        $authors=$repo->TrieMail();
+
+        return $this->render(
+            'author/affiche.html.twig',
+            ['auth'=>$authors]
+        );
+
+    }
+
+
 }
     

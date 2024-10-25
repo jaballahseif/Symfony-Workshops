@@ -121,6 +121,29 @@ class BookController extends AbstractController
             ['book'=>$book]  
         );
     }
+    #[Route('date', name: 'search_date')]
+    function SearchDate(BookRepository $repo,Request $request){
+        $min=$request->get('min');
+        $max=$request->get('max');
+        $book=$repo->FindDate($min,$max);
+        return $this->render(
+            'book/date.html.twig',
+            ['b'=>$book]  
+        );
+    }
 
+    
+    #[Route ('/Authbybook',name:'bookauth')]
+    function Book(BookRepository $repo,Request $request){
+        $name=$request->get('name');
+
+        $book=$repo->AuthorByBook($name);
+
+        return $this->render(
+            'book/affiche.html.twig',
+            ['book'=>$book]
+        );
+
+    }
 
 }

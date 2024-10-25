@@ -5,6 +5,24 @@
 
 </form>
 
+
+<form action="{{path('search_date')}}">
+
+<input type="date" placeholder="min" name="min">
+
+<input type="date" placeholder="max" name="max">
+<input type="submit" value="minmax">
+
+</form>
+
+
+<form action="{{path('bookauth')}}">
+
+<input type="text" placeholder="name" name="name">
+<input type="submit" value="Search">
+
+</form>
+
 La liste des authors
 <table border="1">
 	<tr>
@@ -86,5 +104,4 @@ actions
 </h1>
 <h1>
 nombre de book de mystery  : 
-{{nb}}
 </h1>

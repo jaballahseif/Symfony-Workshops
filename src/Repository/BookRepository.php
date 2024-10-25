@@ -48,4 +48,28 @@ class BookRepository extends ServiceEntityRepository
         return $query->getSingleScalarResult();
     
     }
+    public function  FindDate1(){
+        $em=$this->getEntityManager()
+        ->createQuery('SELECT b from App\Entity\Book b WHERE b.publicationDate between ?1 and ?2');
+        $em->setParameters([1=>"2009-01-01",2=>"2222-12-12"]);
+        return $em->getResult();
+    
+    }
+    public function  FindDate($min,$max){
+        $em=$this->getEntityManager()
+        ->createQuery('SELECT b from App\Entity\Book b WHERE b.publicationDate between ?1 and ?2');
+        $em->setParameters([1=>$min,2=>$max]);
+        return $em->getResult();
+    
+    }
+    public function AuthorByBook($user){
+
+        return $this->createQueryBuilder('b')->join('b.id_Author','a')
+        ->addSelect('a')
+        ->where('a.username = :user')
+        ->setParameter('user',$user)
+        ->getQuery()
+        ->getResult();
+    
+    }
 }
