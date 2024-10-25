@@ -50,10 +50,11 @@ class BookController extends AbstractController
     #[Route('affiche',name:'affbook')]
     function Affiche(BookRepository $repo){
         $books=$repo->findAll();
+        $nb=$repo->CountNbBooks();
 
         return $this->render(
             'book/affiche.html.twig',
-            ['book'=>$books]
+            ['book'=>$books,'nb'=>$nb]
         );
 
     }
@@ -109,5 +110,17 @@ class BookController extends AbstractController
         'bb' => $book,
     ]);
     }
+
+    #[Route('search', name: 'search_ref')]
+    function SearchRef(BookRepository $repo,Request $request){
+        $ref=$request->get('ref');
+        
+        $book=$repo->findByRef($ref);
+        return $this->render(
+            'book/affiche.html.twig',
+            ['book'=>$book]  
+        );
+    }
+
 
 }

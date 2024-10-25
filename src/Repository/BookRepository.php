@@ -40,4 +40,12 @@ class BookRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function  CountNbBooks(){
+        $query=$this->getEntityManager()
+        ->createQuery('SELECT count(nb) from App\Entity\Book nb WHERE nb.Category = :category');
+        $query->setParameter('category', 'Mystery');
+        return $query->getSingleScalarResult();
+    
+    }
 }

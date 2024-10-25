@@ -1,51 +1,90 @@
+<form action="{{path('search_ref')}}">
+
+<input type="text" placeholder="Search" name="ref">
+<input type="submit" value="Search">
+
+</form>
+
 La liste des authors
 <table border="1">
-    <tr>
-        <th>Ref</th>
-        <th>Title</th>
-        <th>Date publiction</th>
-        <th>Enabled</th>
-        <th>Category</th>
+	<tr>
+		<th>
+			Ref
+		</th>
+		<th>
+			Title
+		</th>
+		<th>
+			Date publiction
+		</th>
+		<th>
+			Enabled
+		</th>
+		<th>
+			Category
+		</th>
+		<th>
+			Authored By
+		</th>
+		<th>
+actions
+		</th>
+	</tr>
+	{% set p =0 %}
+	{% set up =0 %}
+	{% for b in book %}
+		<tr>
+			<td>
+				{{ b.ref }}
+			</td>
+			<td>
+				{{ b.title }}
+			</td>
+			<td>
+				{{ b.publicationDate|date("m/d/Y") }}
+			</td>
+			<td>
+				{{ b.enabled }}
+			</td>
+			{% if b.enabled==true %}
+				{% set p =p+1 %}
+			{% endif %}
+			{% if b.enabled==false %}
+				{% set up =up+1 %}
+			{% endif %}
+			<td>
+				{{ b.category }}
+			</td>
+			<td>
+				{{ b.idAuthor.username }}
+			</td>
+			<td>
+				<a href="{{ path('update',{'b':b.ref}) }}">
+					Update
+				</a>
+				<a href="{{ path('delete',{'b':b.ref}) }}">
+					delete
+				</a>
 
-        <th>Authored By</th>
-        <th>update</th>
-        <th>delete</th>
-        <th>show</th>
-
-
-
-    </tr>
-    {%set p =0%}
-    {%set up =0%}
-
-{%for b in book%}        
-
-
-<tr>
-  <td>{{b.ref}}</td>
-  <td>{{b.title}}</td>
-  <td>{{b.publicationDate|date("m/d/Y")}}</td>  
-  <td>{{b.enabled}}</td> 
-  {% if b.enabled==true %}
-  {%set p =p+1%}
-  {% endif %} 
-  {% if b.enabled==false %}
-  {%set up =up+1%}
-  {% endif %} 
-  <td>{{b.category}}</td>  
-  <td>{{b.idAuthor.username}}</td>  
-  <td><a href="{{path('update',{'b':b.ref})}}">Update</a></td>
-  <td><a href="{{path('delete',{'b':b.ref})}}">delete</a></td>
-  <td><a href="{{path('details',{'b':b.ref})}}">detail</a></td>
-
-
-  
-</tr>
-
-
-{%else%} <br> Tableau NotFound
-{%endfor%}
-
+				<a href="{{ path('details',{'b':b.ref}) }}">
+					show
+				</a>
+			</td>
+		</tr>
+	{% else %}
+		<br>
+		Tableau NotFound
+	{% endfor %}
 </table>
-<h1>published = {{p}}</h1>
-<h1>unpublished = {{up}}</h1>
+<h1>
+	published =
+	{{ p }}
+</h1>
+<h1>
+	unpublished =
+	{{ up }}
+</h1>
+<h1>
+nombre de book de mystery  : 
+{{nb}}
+</h1>
